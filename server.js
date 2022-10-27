@@ -12,9 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(express.json());
 
-// app.get('/api/notes', (req, res) => {
-//     res.json (everyNote.slice(1));
-// })
+
 
 app.get('/api/notes', (req, res) => {
   res.sendFile(path.join(__dirname, "./public/index.html"));
@@ -28,7 +26,7 @@ app.post('/api/notes', (req, res) => {
     const genTitle = {
       title,
       text,
-      letter_id: uuid.v1()
+      id: uuid.v1()
     }
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
       if (err) {
