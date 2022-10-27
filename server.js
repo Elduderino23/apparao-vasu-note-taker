@@ -48,21 +48,41 @@ app.post('/api/notes', (req, res) => {
               : console.info('Dutifully Noted Sir!')
         );
       }
+      res.json(everyNote)
 
   })
 }
 });
 
+app.delete('/api/notes', (req, res) => {
+  let removeId = req.params.id
+  fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+    if (err){
+
+    } else{
+      const takeApartNotes = JSON.parse(data);
+      for(i=0;i<takeApartNotes.length;i++){
+        if(takeApartNotes[i].id == deleteId){
+          takeApartNotes.splice(i,1)
+        }
+      }
+      letterContent = takeApartNotes
+    fs.writeFile(
+      '.db/db.json',
+      JSON.stringify(takeApartNotes, null, 4),
+      (writeErr) =>
+      writeErr
+      ? console.error(writeErr)
+      : console.info('Its cleared sir!')
+    )
+    }
+  })
+  res.json(everyNote)
+});
+
 app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
-
-// app.post('/notes', (req, res) => {
-//   res.sendFile(path.join(__dirname, "./public/notes.html"));
-//   const (DataTransferItemList, text)
-// });
-
-// function 
 
 
 
