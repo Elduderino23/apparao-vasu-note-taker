@@ -12,13 +12,25 @@ app.use(express.json());
 
 app.get('/api/notes', (req, res) => {
     res.json (everyNote.slice(1));
-}
+})
+
+app.get('/api/notes', (req, res) => {
+  res.sendFile(path.join(__dirname, "./public/index.html"));
+  console.log('${req.method}Poop is here')
+});
 
 app.get('/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, "./public/index.html"));
+  res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
+
+// app.post('/notes', (req, res) => {
+//   res.sendFile(path.join(__dirname, "./public/notes.html"));
+// });
+
+
+
 
 
 app.listen(PORT, () => {
-  console.log(`Send it`);
+  console.log(`Send it ${PORT}!`);
 });
