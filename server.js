@@ -1,4 +1,4 @@
-// const variables 
+// const variables with require methods connect to packages/files
 const express = require('express');
 const path = require('path');
 const fs = require("fs")
@@ -14,12 +14,13 @@ app.use(express.static('public'));
 app.use(express.json());
 
 
-
+// sends files to directory name index.html to be generated from inputs on website.
 app.get('/api/notes', (req, res) => {
   res.sendFile(path.join(__dirname, "./public/index.html"));
   res.json(everyNote)
 });
 
+//  sends inputs from website, to the server and then back. Creates requests and responses in order website to work as intended.
 app.post('/api/notes', (req, res) => {
   const {title, text} = req.body
 
@@ -36,10 +37,11 @@ app.post('/api/notes', (req, res) => {
         // Convert string into JSON object
         const parsedNotes = JSON.parse(data);
 
-        // Add a new review
+        // Add a new Note
         parsedNotes.push(genTitle);
         everyNote = parsedNotes;
       
+        // Writes files
         fs.writeFile(
           './db/db.json',
           JSON.stringify(parsedNotes, null, 3),
@@ -49,6 +51,7 @@ app.post('/api/notes', (req, res) => {
               : console.info('Dutifully Noted Sir!')
         );
       }
+      // makes past inputs clickable without hard refresh
       res.json(everyNote)
 
   })
@@ -61,7 +64,7 @@ app.get('/notes', (req, res) => {
 });
 
 
-
+//  creates link in terminal the minute server.js is running
 app.listen(PORT, () => {
-  console.log(`Send it ${PORT}!`);
+  console.log(`Send it http://localhost:${PORT}`);
 });
